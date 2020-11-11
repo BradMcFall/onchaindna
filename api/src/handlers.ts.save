@@ -1,0 +1,84 @@
+import { Request, Response } from 'express';
+
+import {
+    Avalanche,
+    BinTools,
+    Buffer,
+    BN
+  } from "avalanche" 
+import {
+    InitialStates,
+    SECPTransferOutput
+  } from "avalanche/dist/apis/avm"
+
+let myNetworkID = 5; //default is 3, we want to override that for our local network
+let myBlockchainID = "2JVSBoinj9C2J33VntvzYtVJNZdN2NKiwwKjcumHUWEb5DbBrm"; // The X-Chain blockchainID on this network
+//let avax = new Avalanche("localhost", 9650, "http", myNetworkID, myBlockchainID);
+//let xchain = avax.XChain(); //returns a reference to the X-Chain used by AvalancheJS
+
+//let myKeychain = xchain.keyChain();
+//let newAddress1 = myKeychain.makeKey(); //returns a Buffer for the address
+
+// Name our new coin and give it a symbol
+//let name = "Hypercardpathy";
+//let symbol = "aTNT";
+
+// Where is the decimal point indicate what 1 asset is and where fractional assets begin
+// Ex: 1 AVAX is denomination 9, so the smallest unit of AVAX is nanoAVAX (nAVAX) at 10^-9 AVAX
+//let denomination = 9;
+//let addresses = xchain.keyChain().getAddresses();
+//let secpOutput1 = new SECPTransferOutput(new BN(4), new BN(4), 1, [addresses[1]]);
+//initialState.addOutput(secpOutput1);
+//let utxos = await xchain.getUTXOs(addresses);
+
+//import { Avalanche} from "avalanche"
+//let myNetworkID = 5; 
+//let myBlockchainID = "X"; 
+const avalanche: Avalanche = new Avalanche("localhost", 9650, "http", myNetworkID, myBlockchainID)
+let xchain = avalanche.XChain();
+
+let myKeychain = xchain.keyChain();
+let newAddress1 = myKeychain.makeKey(); //returns a Buffer for the address
+let addressStrings = myKeychain.getAddressStrings();
+//let addresscheck = addressStrings
+
+//let addresscheck = ['X-fuji10ddywcev4k57jgc22097sy5e4p35q6tn5y6xr5']
+let addresscheck = ['X-fuji1edx6wjkd3spltlpmfe6yu4w8srm98met0nptr0']
+let utxos =  xchain.getUTXOs(addresscheck);
+
+
+
+//async function getUTXOs(addresscheck: string[])
+//{
+ // let u = await xchain.getUTXOs(addresscheck);
+ // let utxos = u.utxos;
+ /// console.log("Checking utxos: ", utxos);
+ let sendAmount = new BN(100);
+
+ let assetid = "AVAX"; //avaSerialized s let friendsAddress = "X-fuji1fkm9pj6zgq84v65eupm093nvnkcsm4m98ptlj0";
+ // let unsignedTx = await xchain.buildBaseTx(utxos, sendAmount, assetid, [friendsAddress], addresscheck, addresscheck);
+//}
+
+
+interface HelloResponse {
+  hello: string;
+}
+
+type HelloBuilder = (name: string) => HelloResponse;
+
+const helloBuilder: HelloBuilder = name => ({ hello: name });
+
+export const rootHandler = (_req: Request, res: Response) => {
+console.log(myNetworkID);
+//console.log(addresses);
+console.log(utxos);
+console.log(addressStrings) 
+return res.send('API is indeed working 🤓');
+};
+
+export const helloHandler = (req: Request, res: Response) => {
+  const { params } = req;
+  const { name = 'World' } = params;
+  const response = helloBuilder(name);
+  return res.json(response);
+};

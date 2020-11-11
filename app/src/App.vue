@@ -5,8 +5,16 @@
     <router-link to="/sell">Sell</router-link> |
     <router-link to="buy">Buy</router-link>
   </div>
+  <div class="App">
   <router-view/>
+  </div>
 </template>
+<script>
+export default {
+  name: 'App',
+  components: {}
+}
+</script>
 
 <style lang="scss">
 #app {
