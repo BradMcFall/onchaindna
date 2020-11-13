@@ -8,12 +8,14 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import UserForm from '@/components/UserForm.vue'
-@Options({
-  components: {
-    UserForm
-  }
-})
+ @Options({
+   components: {
+     UserForm
+   }
+ })
+
 export default class Introduction extends Vue {}
+
 </script>
 
 <style>
