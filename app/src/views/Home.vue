@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="OnChainDNA logo" src="../assets/logoocd.png">
+    <p>ONCHAINDNA</p>
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
 </template>
